@@ -7,22 +7,48 @@ body {
 span {
     font-family: digital;
     font-size: 8em;
+    display: inline-block;
+    padding-top: 20px;
+}
+
+h1 {
+  font-size: 60px;
 }
 
 .container {
     width: 100%;
     height: 100vh;
     background-color: cornflowerblue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-rows: 32% 36% 32%;
+    grid-template-columns: 100%;
+    grid-template-areas: 
+      "title-bar"
+      "clock-area"
+      "buttons";
+}
+
+.title-bar {
+  grid-area: title-bar;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.clock-area {
+  width: 100%;
+  height: 100%;
+  grid-area: clock-area;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .base {
   width: 950px;
-  height: 250px;
-  background: red;
+  height: 300px;
+  background: black;
   transform: perspective(25px) rotateX(1deg);
   border: black 2px solid;
   border-radius: 60px;
@@ -34,9 +60,49 @@ span {
 }
 
 .clock {
-  height: 75%;
+  height: 60%;
   width: 40%;
   background-color: white;
   border-radius: 8px;
   text-align: center;
+  margin-top: 25px;
+}
+
+#white {
+  border: black 5px solid;
+}
+
+#black {
+  border: black 5px solid;
+}
+
+.buttons {
+  grid-area: buttons;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+button {
+  height: 75px;
+  width: 200px;
+  border: none;
+  background-color: yellow;
+  color: black;
+  border-radius: 30px;
+  filter: drop-shadow(0px 0px 5px black);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+button:active {
+  background-color: rgb(58, 185, 58);
 }
