@@ -6,13 +6,23 @@ body {
 
 span {
     font-family: digital;
+    width: 100%;
     font-size: 8em;
     display: inline-block;
     padding-top: 20px;
+    background-color: rgb(211, 211, 211);
+    border: black 5px solid;
+    border-radius: 15px;
+
 }
 
 h1 {
   font-size: 60px;
+}
+
+h3 {
+  color: white;
+  font-size: 25px;
 }
 
 .container {
@@ -60,12 +70,10 @@ h1 {
 }
 
 .clock {
-  height: 60%;
+  height: 90%;
   width: 40%;
-  background-color: white;
   border-radius: 8px;
   text-align: center;
-  margin-top: 25px;
 }
 
 #white {
@@ -76,7 +84,7 @@ h1 {
   border: black 5px solid;
 }
 
-.buttons {
+.game-buttons {
   grid-area: buttons;
   width: 100%;
   height: 100%;
