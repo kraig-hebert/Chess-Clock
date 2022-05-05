@@ -1,11 +1,13 @@
 const WHITECLOCK = document.getElementById('white-clock')
 const BLACKCLOCK = document.getElementById('black-clock')
 let turn = 'white';
+let increment  = 5;
 let whiteClockTimer;
 let blackClockTimer;
 let count;
 let minutes;
 let seconds;
+let gameType = '01:00';
 
 
 // Event Listener on the space bar to swap timers
@@ -28,7 +30,7 @@ document.addEventListener('keyup', event => {
 })
 
 //add game button event listeners
-document.getElementById('game-btn').addEventListener("click", setGame);
+document.getElementById('game-btn').addEventListener("click", openForm);
 document.getElementById('reset-btn').addEventListener("click", resetClocks);
 document.getElementById('stop-btn').addEventListener("click", stopTimers);
 
@@ -64,8 +66,10 @@ function startBlackClock () {
 
 // takes current time and ticks off 1 second
 function setTimer() {
-  if (parseInt(seconds) > 0) {
-    seconds = parseInt(seconds) - 1;
+  if (parseInt(seconds) > 0 && parseInt(seconds) < 58) {
+    seconds = (parseInt(seconds) - 1) + increment;
+    console.log(seconds);
+
     return [minutes, seconds.toString().padStart(2, "0")];
   } else {
     minutes = parseInt(minutes) - 1;
@@ -75,15 +79,22 @@ function setTimer() {
 };
 
 //allows user to choose clock timer type
-function setGame() {
-
+function setupGame(time) {
+  stopTimers();
+  gameType = time;
+  turn = "white";
+  WHITECLOCK.style.borderColor = 'black';
+  BLACKCLOCK.style.borderColor = 'black';
+  WHITECLOCK.innerHTML = time;
+  BLACKCLOCK.innerHTML = time;
+  closeForm();
 };
 
 //resets clock to original start time
 function resetClocks() {
   stopTimers();
-  WHITECLOCK.innerHTML = "10:00";
-  BLACKCLOCK.innerHTML = "10:00";
+  WHITECLOCK.innerHTML = gameType;
+  BLACKCLOCK.innerHTML = gameType;
   turn = "white";
   WHITECLOCK.style.borderColor = 'black';
   BLACKCLOCK.style.borderColor = 'black';
@@ -94,3 +105,12 @@ function stopTimers() {
   clearInterval(whiteClockTimer);
   clearInterval(blackClockTimer);
 };
+
+//form functions
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
