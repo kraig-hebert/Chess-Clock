@@ -1,116 +1,133 @@
 const WHITECLOCK = document.getElementById('white-clock')
 const BLACKCLOCK = document.getElementById('black-clock')
 let turn = 'white';
-let increment  = 5;
-let whiteClockTimer;
-let blackClockTimer;
-let count;
-let minutes;
-let seconds;
-let gameType = '01:00';
+let whiteTimer = new Date(0, 0, 0, 0, 10, 0);
+let blackTimer = new Date(0, 0, 0, 0, 10, 0);
+let whiteTurn;
+let blackTurn;
+let gameType = {
+  Time: 10,
+  Increment: 0,
+};
 
-
-// Event Listener on the space bar to swap timers
-document.addEventListener('keyup', event => {
-  if (event.code === 'Space') {
-    if (turn == 'white') {
-      clearInterval(blackClockTimer)
-      WHITECLOCK.style.borderColor = 'yellow';
-      BLACKCLOCK.style.borderColor = 'black';
-      turn = "black";
-      whiteClockTimer = setInterval(startWhiteClock, 1000);
-    } else {
-        clearInterval(whiteClockTimer)
-        BLACKCLOCK.style.borderColor = 'yellow';
-        WHITECLOCK.style.borderColor = 'black';
-        turn = "white";
-        blackClockTimer = setInterval(startBlackClock, 1000);
-    } 
-  }
-})
 
 //add game button event listeners
+document.getElementById('start-btn').addEventListener("click", startGame);
 document.getElementById('game-btn').addEventListener("click", openForm);
 document.getElementById('reset-btn').addEventListener("click", resetClocks);
 document.getElementById('stop-btn').addEventListener("click", stopTimers);
+document.getElementById('cancel').addEventListener("click", closeForm);
 
 
+//starts game with white going first
+function startGame () {
+  // Event Listener on the space bar to trigger turn change
+  document.addEventListener('keydown', handleKeyDownEvent); 
+  turn = "black";
+  WHITECLOCK.style.borderColor = 'yellow';
+  document.activeElement.blur()
+  document.getElementById('start-btn').style.backgroundColor = 'yellow'
+  document.getElementById('start-btn').removeEventListener("click", startGame)
+  whiteTurn = setInterval(startWhiteTurn, 1000);
+};
 
-
-function startWhiteClock () {
-  count = WHITECLOCK.innerHTML;
-  [minutes, seconds] = count.split(':');
-  if (parseInt(minutes) == 0 && parseInt(seconds) == 0) {
-    clearInterval(whiteClockTimer);
+// timer that counts down whites clock by 1 second
+function startWhiteTurn () {
+  if (whiteTimer.getMinutes() == 0 && whiteTimer.getSeconds() == 0) {
+    clearInterval(whiteTurn);
     WHITECLOCK.style.borderColor = 'red';
     WHITECLOCK.innerHTML = '00:00'
   } else {
-    [minutes, seconds] = setTimer();
-    WHITECLOCK.innerHTML = minutes + ':' + seconds;
+      whiteTimer.setSeconds(whiteTimer.getSeconds() - 1);
+      WHITECLOCK.innerHTML = whiteTimer.getMinutes().toString().padStart(2, "0") + ':' + whiteTimer.getSeconds().toString().padStart(2, "0");
   }
 };
 
-// timer countdown that repeats every 1 second
-function startBlackClock () {
-  count = BLACKCLOCK.innerHTML;
-  [minutes, seconds] = count.split(':');
-  if (parseInt(minutes) == 0 && parseInt(seconds) == 0) {
+// adds increment to white timer after turn ends
+function endWhiteTurn () {
+  clearInterval(whiteTurn);
+  whiteTimer.setSeconds(whiteTimer.getSeconds() + gameType.Increment);
+  WHITECLOCK.innerHTML = whiteTimer.getMinutes().toString().padStart(2, "0") + ':' + whiteTimer.getSeconds().toString().padStart(2, "0");
+
+};
+
+// timer that counts down blacks clock by 1 second
+function startBlackTurn () {
+  if (blackTimer.getMinutes() == 0 && blackTimer.getSeconds() == 0) {
     clearInterval(blackClockTimer);
     BLACKCLOCK.style.borderColor = 'red';
     BLACKCLOCK.innerHTML = '00:00'
   } else {
-    [minutes, seconds] = setTimer();
-    BLACKCLOCK.innerHTML = minutes + ':' + seconds;
+    blackTimer.setSeconds(blackTimer.getSeconds() - 1);
+    BLACKCLOCK.innerHTML = blackTimer.getMinutes().toString().padStart(2, "0") + ':' + blackTimer.getSeconds().toString().padStart(2, "0");
   }
 };
 
-// takes current time and ticks off 1 second
-function setTimer() {
-  if (parseInt(seconds) > 0 && parseInt(seconds) < 58) {
-    seconds = (parseInt(seconds) - 1) + increment;
-    console.log(seconds);
-
-    return [minutes, seconds.toString().padStart(2, "0")];
-  } else {
-    minutes = parseInt(minutes) - 1;
-    seconds = 59
-    return[minutes.toString().padStart(2, "0"), seconds.toString().padStart(2, "0")]
-  }
+// adds increment to black timer after turn ends
+function endBlackTurn () {
+  clearInterval(blackTurn);
+  blackTimer.setSeconds(blackTimer.getSeconds() + gameType.Increment);
+  BLACKCLOCK.innerHTML = blackTimer.getMinutes().toString().padStart(2, "0") + ':' + blackTimer.getSeconds().toString().padStart(2, "0");
 };
 
 //allows user to choose clock timer type
-function setupGame(time) {
-  stopTimers();
-  gameType = time;
-  turn = "white";
-  WHITECLOCK.style.borderColor = 'black';
-  BLACKCLOCK.style.borderColor = 'black';
-  WHITECLOCK.innerHTML = time;
-  BLACKCLOCK.innerHTML = time;
+function setupGame(time, increment) {
+  gameType.Time = time;
+  gameType.Increment = increment
+  resetClocks();
   closeForm();
 };
 
 //resets clock to original start time
 function resetClocks() {
   stopTimers();
-  WHITECLOCK.innerHTML = gameType;
-  BLACKCLOCK.innerHTML = gameType;
+  document.removeEventListener("keydown", handleKeyDownEvent);
+  whiteTimer.setMinutes(gameType.Time);
+  whiteTimer.setSeconds(0);
+  WHITECLOCK.innerHTML = whiteTimer.getMinutes().toString().padStart(2, "0") + ':' + whiteTimer.getSeconds().toString().padStart(2, "0");
+  blackTimer.setMinutes(gameType.Time);
+  blackTimer.setSeconds(0);
+  BLACKCLOCK.innerHTML = blackTimer.getMinutes().toString().padStart(2, "0") + ':' + blackTimer.getSeconds().toString().padStart(2, "0");
   turn = "white";
   WHITECLOCK.style.borderColor = 'black';
   BLACKCLOCK.style.borderColor = 'black';
+  document.getElementById('start-btn').style.backgroundColor = 'green'
+  document.getElementById('start-btn').addEventListener("click", startGame);
 };
 
 //pauses both timers
 function stopTimers() {
-  clearInterval(whiteClockTimer);
-  clearInterval(blackClockTimer);
+  clearInterval(whiteTurn);
+  clearInterval(blackTurn);
+  document.activeElement.blur()
 };
 
-//form functions
+//opens hidden form
 function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
 
+// hides form
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
+
+// handles action on space bar 
+function handleKeyDownEvent (event) {
+  if (event.code === 'Space') {
+    if (turn == 'white') {
+      endBlackTurn(blackTurn);
+      WHITECLOCK.style.borderColor = 'yellow';
+      BLACKCLOCK.style.borderColor = 'black';
+      turn = "black";
+      whiteTurn = setInterval(startWhiteTurn, 1000);
+    } else {
+        endWhiteTurn(whiteTurn);
+        BLACKCLOCK.style.borderColor = 'yellow';
+        WHITECLOCK.style.borderColor = 'black';
+        turn = "white";
+        blackTurn = setInterval(startBlackTurn, 1000);
+    } 
+  }
+};
+

@@ -120,6 +120,14 @@ button:active {
   background-color: rgb(58, 185, 58);
 }
 
+#start-btn {
+  background-color: green;
+}
+
+#start-btn:active {
+  background-color: rgb(0, 77, 0);
+}
+
 .form-popup {
   display: none;
   position: fixed;
