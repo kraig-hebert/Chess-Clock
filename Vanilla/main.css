@@ -5,7 +5,7 @@ body {
 }
 
 span {
-    font-family: digital;
+    font-family: 'Hanalei';
     width: 100%;
     font-size: 8em;
     display: inline-block;
@@ -117,7 +117,7 @@ button:hover {
 }
 
 button:active {
-  background-color: rgb(58, 185, 58);
+  background-color: rgb(189, 189, 0);
 }
 
 #start-btn {
