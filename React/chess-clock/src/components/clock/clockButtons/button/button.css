@@ -1,0 +1,18 @@
+.button {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 30%;
+    color: black;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: green;
+}
+
+.button:active {
+    background-color: yellowgreen;
+}

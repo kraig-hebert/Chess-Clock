@@ -1,7 +1,17 @@
-import React from "react";
+import React from 'react';
+import './clock.css';
+
+import HalfClock from './halfClock/HalfClock';
+import ClockButtons from './clockButtons/ClockButtons';
 
 const Clock = () => {
-  return <div>Clock</div>;
+  return (
+    <div className="clock">
+      <HalfClock side="White" />
+      <ClockButtons />
+      <HalfClock side="Black" />
+    </div>
+  );
 };
 
 export default Clock;
