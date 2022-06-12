@@ -3,9 +3,23 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const stateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-  const [turn, setTurn] = useState('white');
-  const [whiteTimer, setWhiteTimer] = useState(new Date(0, 0, 0, 0, 10, 0));
-  const [blackTimer, setBlackTimer] = useState(new Date(0, 0, 0, 0, 10, 0));
+  const [footerActive, setFooterActive] = useState(true);
 
-  useEffect;
+  const handleClockButton = (e, text) => {
+    console.log(e);
+    if (text === 'settings') setFooterActive(!footerActive);
+  };
+  return (
+    <stateContext.Provider
+      value={{
+        footerActive,
+        setFooterActive,
+        handleClockButton,
+      }}
+    >
+      {children}
+    </stateContext.Provider>
+  );
 };
+
+export const useStateContext = () => useContext(stateContext);

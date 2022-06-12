@@ -1,9 +1,25 @@
 .footer {
     height: 200px;
     width: 100%;
-    background-color: yellow;
     display: flex;
     align-items: center;
     justify-content: space-around;
-
+    padding-bottom: 50px;
 }
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.input-group > p {
+    font-size: 30px;
+}
+
+.input-item {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+

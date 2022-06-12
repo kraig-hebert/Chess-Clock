@@ -1,16 +1,16 @@
 import React from 'react';
 import './clockButtons.css';
-import Button from './button/Button';
-import { TiMediaPlay } from 'react-icons/ti';
+import ClockButton from './clockButton/ClockButton';
+import { AiOutlinePlayCircle } from 'react-icons/ai';
 import { BiReset, BiStopCircle } from 'react-icons/bi';
 import { IoMdSettings } from 'react-icons/io';
 const ClockButtons = () => {
   return (
     <div className="clockButtons">
-      <Button props={{ icon: <TiMediaPlay /> }} />
-      <Button props={{ icon: <IoMdSettings /> }} />
-      <Button props={{ icon: <BiReset /> }} />
-      <Button props={{ icon: <BiStopCircle /> }} />
+      <ClockButton props={{ text: 'play', icon: <AiOutlinePlayCircle /> }} />
+      <ClockButton props={{ text: 'settings', icon: <IoMdSettings /> }} />
+      <ClockButton props={{ text: 'reset', icon: <BiReset /> }} />
+      <ClockButton props={{ text: 'stop', icon: <BiStopCircle /> }} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-.button {
+.clockButton {
     background-color: white;
     display: flex;
     align-items: center;
@@ -9,10 +9,10 @@
     cursor: pointer;
 }
 
-.button:hover {
+.clockButton:hover {
     background-color: green;
 }
 
-.button:active {
+.clockButton:active {
     background-color: yellowgreen;
 }
