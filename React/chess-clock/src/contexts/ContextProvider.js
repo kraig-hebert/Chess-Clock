@@ -9,14 +9,14 @@ export const ContextProvider = ({ children }) => {
   const [whiteClock, setWhiteClock] = useState(new Date(0, 0, 0, 0, 10, 0));
   const [blackClock, setBlackClock] = useState(new Date(0, 0, 0, 0, 10, 0));
   const [gameType, setGameType] = useState({
-    minutes: 10,
-    seconds: 0,
-    increment: 5,
+    minutes: '10',
+    seconds: '0',
+    increment: '5',
   });
   const [tempGameType, setTempGameType] = useState({
-    minutes: 10,
-    seconds: 0,
-    increment: 5,
+    minutes: '10',
+    seconds: '0',
+    increment: '5',
   });
   const [settingsChanged, setSettingsChanged] = useState({
     minutes: '',
@@ -36,11 +36,19 @@ export const ContextProvider = ({ children }) => {
 
   const handleInputChange = (e, text) => {
     setTempGameType({ ...tempGameType, [text]: e.target.value });
-    console.log(tempGameType);
-    console.log('this');
-    parseFloat(gameType.minutes) === parseFloat(tempGameType.minutes)
+    parseFloat(gameType[text]) === parseFloat(e.target.value)
       ? setSettingsChanged({ ...settingsChanged, [text]: '' })
       : setSettingsChanged({ ...settingsChanged, [text]: 'value-changed' });
+  };
+
+  const handleFooterButton = (e, text) => {
+    setGameType({ ...gameType, [text]: tempGameType[text] });
+    parseFloat(gameType[text]) === parseFloat(tempGameType[text])
+      ? console.log('yup')
+      : setSettingsChanged({
+          ...settingsChanged,
+          [text]: 'value-changed',
+        });
   };
 
   useEffect(() => {
@@ -72,6 +80,7 @@ export const ContextProvider = ({ children }) => {
         tempGameType,
         settingsChanged,
         setSettingsChanged,
+        handleFooterButton,
       }}
     >
       {children}
