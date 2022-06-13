@@ -2,7 +2,7 @@ input[type="text"] {
     border: none;
     width: 50px;
     height: 50px;
-    font-size: 40px;
+    font-size: 35px;
     text-align: center;
     outline: 2px black solid;
     border-radius: 10px;
@@ -11,9 +11,10 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-    border: none;
-    color: white;
-    background-color: black;
-    
+    outline: 2px red solid;
+}
 
+.value-changed { 
+    background-color: red;
+    color: white;
 }

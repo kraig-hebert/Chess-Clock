@@ -3,11 +3,11 @@ import './clockButton.css';
 import { useStateContext } from '../../../../contexts/ContextProvider';
 
 const ClockButton = ({ props }) => {
-  const { handleClockButton } = useStateContext();
+  const { handleClockButton, footerActive } = useStateContext();
 
   return (
     <div
-      className="clockButton"
+      className={`clockButton ${props.class}`}
       onClick={(e) => handleClockButton(e, props.text)}
     >
       {props.icon}

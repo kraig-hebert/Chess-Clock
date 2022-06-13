@@ -5,7 +5,8 @@ import FooterInput from './footerInput/FooterInput';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 const Footer = () => {
-  const { footerActive } = useStateContext();
+  const { footerActive, gameType, tempGameType, settingsChanged } =
+    useStateContext();
   return (
     <>
       {footerActive ? (
@@ -13,22 +14,40 @@ const Footer = () => {
           <div className="input-group">
             <p>Set Minutes</p>
             <div className="input-item">
-              <FooterButton text="Set Minutes" />
-              <FooterInput />
+              <FooterButton text="minutes" />
+              <FooterInput
+                props={{
+                  text: 'minutes',
+                  value: tempGameType.minutes,
+                  class: settingsChanged.minutes,
+                }}
+              />
             </div>
           </div>
           <div className="input-group">
             <p>Set Seconds</p>
             <div className="input-item">
-              <FooterButton text="Set Seconds" />
-              <FooterInput />
+              <FooterButton text="seconds" />
+              <FooterInput
+                props={{
+                  text: 'seconds',
+                  value: tempGameType.seconds,
+                  class: settingsChanged.seconds,
+                }}
+              />
             </div>
           </div>
           <div className="input-group">
             <p>Set Increment</p>
             <div className="input-item">
-              <FooterButton text="Set Incremenet" />
-              <FooterInput />
+              <FooterButton text="increment" />
+              <FooterInput
+                props={{
+                  text: 'increment',
+                  value: tempGameType.increment,
+                  class: settingsChanged.increment,
+                }}
+              />
             </div>
           </div>
         </div>

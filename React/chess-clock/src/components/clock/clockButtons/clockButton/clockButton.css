@@ -10,9 +10,13 @@
 }
 
 .clockButton:hover {
-    background-color: green;
+    background-color: yellowgreen;
 }
 
 .clockButton:active {
-    background-color: yellowgreen;
+    background-color: green;
+}
+
+.clock-button-active {
+    background-color: green;
 }

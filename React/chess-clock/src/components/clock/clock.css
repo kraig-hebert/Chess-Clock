@@ -1,5 +1,6 @@
 .clock {
-  width: 950px;
+  width: 90%;
+  max-width: 1000px;
   height: 275px;
   background: black;
   transform: perspective(25px) rotateX(1deg);
