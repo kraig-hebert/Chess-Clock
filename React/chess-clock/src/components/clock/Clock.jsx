@@ -1,6 +1,5 @@
 import React from 'react';
 import './clock.css';
-
 import HalfClock from './halfClock/HalfClock';
 import ClockButtons from './clockButtons/ClockButtons';
 

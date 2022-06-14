@@ -1,10 +1,14 @@
 import React from 'react';
+import { useStateContext } from '../../../../contexts/ContextProvider';
 import './timer.css';
 
-const Timer = () => {
+const Timer = ({ timer }) => {
+  console.log(timer);
   return (
     <div className="timer">
-      <p>10:00</p>
+      <p>{`${timer[0].toString().padStart(2, '0')}:${timer[1]
+        .toString()
+        .padStart(2, '0')}`}</p>
     </div>
   );
 };
