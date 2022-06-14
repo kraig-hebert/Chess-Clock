@@ -36,19 +36,41 @@ export const ContextProvider = ({ children }) => {
 
   const handleClockButton = (e, text) => {
     if (text === 'settings') setFooterActive(!footerActive);
-    else if (text === 'play') setPaused(!paused);
+    else if (text === 'play') {
+      setPaused(!paused);
+      if (tick === 1) setTick(2);
+      else {
+        clearTimeout(timer);
+        setTick(1);
+      }
+    } else {
+      const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
+      setWhiteTimer(newDate);
+      setBlackTimer(newDate);
+      resetGame();
+    }
+  };
+
+  const resetGame = () => {
+    clearTimeout(timer);
+    setTurn(true);
+    setTick(1);
+    setPaused(false);
   };
 
   const handleKeyDown = (event) => {
-    if (event.code === 'Enter') {
-      clearTimeout(timer);
-
-      if (turn) {
-        setTurn(!turn);
-        handleWhiteTurn();
+    if (event.code === 'Space') {
+      if (tick === 1) {
+        return undefined; // ignore space bar if game is paused or play button has not been pressed to start game
       } else {
-        setTurn(!turn);
-        handleBlackTurn();
+        clearTimeout(timer);
+        if (turn) {
+          setTurn(!turn);
+          handleWhiteTurn();
+        } else {
+          setTurn(!turn);
+          handleBlackTurn();
+        }
       }
     }
   };
@@ -98,30 +120,40 @@ export const ContextProvider = ({ children }) => {
   const handleFooterButton = (e, text) => {
     setGameType({ ...gameType, [text]: tempGameType[text] });
     setSettingsChanged({ ...settingsChanged, [text]: '' });
-    if (text === 'minutes') {
+    if (text === 'minutes' && gameType.minutes != tempGameType.minutes) {
       setWhiteTimer(
         new Date(0, 0, 0, 0, tempGameType.minutes, gameType.seconds)
       );
       setBlackTimer(
         new Date(0, 0, 0, 0, tempGameType.minutes, gameType.seconds)
       );
-    } else if (text === 'seconds') {
+      resetGame();
+    } else if (text === 'seconds' && gameType.seconds != tempGameType.seconds) {
       setWhiteTimer(
         new Date(0, 0, 0, 0, gameType.minutes, tempGameType.seconds)
       );
       setBlackTimer(
         new Date(0, 0, 0, 0, gameType.minutes, tempGameType.seconds)
       );
+      resetGame();
+    } else if (
+      text === 'increment' &&
+      gameType.increment != tempGameType.increment
+    ) {
+      const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
+      setWhiteTimer(newDate);
+      setBlackTimer(newDate);
+      resetGame();
     }
   };
 
   useEffect(() => {
-    if (firstUpdate.current) {
+    if (tick === 1 || firstUpdate.current === true) {
       firstUpdate.current = false;
     } else {
-      if (!turn) {
+      if (turn) {
         timer = setTimeout(handleWhiteTurn, 1000);
-      } else if (turn) {
+      } else if (!turn) {
         timer = setTimeout(handleBlackTurn, 1000);
       }
     }
@@ -130,7 +162,7 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [turn]);
+  }, [turn, tick]);
 
   /* this use effect allows me to to track difference in game and tempGame for testing NOT NECESSARY for clock to function*/
   useEffect(() => {

@@ -2,7 +2,7 @@ import React from 'react';
 import './clockButtons.css';
 import ClockButton from './clockButton/ClockButton';
 import { AiOutlinePlayCircle, AiOutlinePauseCircle } from 'react-icons/ai';
-import { BiReset, BiStopCircle } from 'react-icons/bi';
+import { BiReset, BiHelpCircle } from 'react-icons/bi';
 import { TbSettings } from 'react-icons/tb';
 import { useStateContext } from '../../../contexts/ContextProvider';
 const ClockButtons = () => {
@@ -24,7 +24,7 @@ const ClockButtons = () => {
         }}
       />
       <ClockButton props={{ text: 'reset', icon: <BiReset /> }} />
-      <ClockButton props={{ text: 'stop', icon: <BiStopCircle /> }} />
+      <ClockButton props={{ text: 'help', icon: <BiHelpCircle /> }} />
     </div>
   );
 };
