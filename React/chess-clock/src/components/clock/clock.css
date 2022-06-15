@@ -4,7 +4,6 @@
   height: 275px;
   background: black;
   transform: perspective(25px) rotateX(1deg);
-  border: black 2px solid;
   border-radius: 60px;
   display: flex;
   flex-direction: row;

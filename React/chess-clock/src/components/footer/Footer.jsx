@@ -7,7 +7,7 @@ import FooterHelp from './footerHelp/FooterHelp';
 const Footer = () => {
   const { footerSettingsActive, footerHelpActive } = useStateContext();
   return (
-    <>
+    <footer className="footer">
       {footerSettingsActive ? (
         <FooterSettings />
       ) : footerHelpActive ? (
@@ -15,7 +15,7 @@ const Footer = () => {
       ) : (
         <div className="footer-blank"></div>
       )}
-    </>
+    </footer>
   );
 };
 

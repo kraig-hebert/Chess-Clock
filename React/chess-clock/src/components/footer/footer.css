@@ -1,9 +1,10 @@
-.footer-blank {
+.footer {
     height: 200px;
     width: 90%;
     max-width: 1000px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-bottom: 50px;
 }
+
