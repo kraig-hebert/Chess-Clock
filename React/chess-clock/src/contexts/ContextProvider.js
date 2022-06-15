@@ -72,9 +72,29 @@ export const ContextProvider = ({ children }) => {
       } else {
         clearTimeout(timer);
         if (turn) {
+          const newDate = new Date(
+            0,
+            0,
+            0,
+            0,
+            blackTimer.getMinutes(),
+            blackTimer.getSeconds()
+          );
+          newDate.setSeconds(newDate.getSeconds() + gameType.increment);
+          setBlackTimer(newDate);
           setTurn(!turn);
           handleWhiteTurn();
         } else {
+          const newDate = new Date(
+            0,
+            0,
+            0,
+            0,
+            whiteTimer.getMinutes(),
+            whiteTimer.getSeconds()
+          );
+          newDate.setSeconds(newDate.getSeconds() + gameType.increment);
+          setWhiteTimer(newDate);
           setTurn(!turn);
           handleBlackTurn();
         }
@@ -118,7 +138,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   const handleInputChange = (e, text) => {
-    setTempGameType({ ...tempGameType, [text]: e.target.value });
+    setTempGameType({ ...tempGameType, [text]: parseFloat(e.target.value) });
     parseFloat(gameType[text]) === parseFloat(e.target.value)
       ? setSettingsChanged({ ...settingsChanged, [text]: '' })
       : setSettingsChanged({ ...settingsChanged, [text]: 'value-changed' });
