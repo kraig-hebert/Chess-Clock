@@ -1,5 +1,7 @@
 import React from 'react';
 import './footerHelp.css';
+import FooterButtonHelp from './footerButtonHelp/FooterButtonHelp';
+import FooterHelpText from './footerHelpText/FooterHelpText';
 
 const FooterHelp = () => {
   return (

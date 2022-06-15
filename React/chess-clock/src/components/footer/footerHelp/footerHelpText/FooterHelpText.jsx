@@ -2,7 +2,7 @@ import React from 'react';
 import './footerHelpText.css';
 
 const FooterHelpText = () => {
-  return <div>FooterHelpText</div>;
+  return <></>;
 };
 
 export default FooterHelpText;

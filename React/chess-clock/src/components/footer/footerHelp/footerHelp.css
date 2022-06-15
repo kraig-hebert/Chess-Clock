@@ -1,9 +1,14 @@
 .footer-help {
-    height: 200px;
+    height: 250px;
     width: 100%;
     max-width: 1000px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     padding-bottom: 50px;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+
 }
+

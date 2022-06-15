@@ -1,0 +1,26 @@
+.footer-help-topic {
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.274);
+    cursor: pointer;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+
+}
+
+.footer-help-topic:hover { 
+    background-color: rgba(255, 255, 255, 0.521);
+}
+
+.footer-help-topic:active { 
+    background-color: rgba(255, 255, 255, 0.705);
+    color: green;
+}
+
+.footer-help-topic > span { 
+    margin-left: 20px;
+}
+
