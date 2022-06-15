@@ -1,6 +1,6 @@
 import React from 'react';
 import './footerInput.css';
-import { useStateContext } from '../../../contexts/ContextProvider';
+import { useStateContext } from '../../../../contexts/ContextProvider';
 
 const FooterInput = ({ props }) => {
   const { handleInputChange } = useStateContext();

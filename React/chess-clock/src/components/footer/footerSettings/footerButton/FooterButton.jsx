@@ -1,7 +1,7 @@
 import React from 'react';
 import './footerButton.css';
 import { MdOutlineInput } from 'react-icons/md';
-import { useStateContext } from '../../../contexts/ContextProvider';
+import { useStateContext } from '../../../../contexts/ContextProvider';
 
 const FooterButton = ({ text }) => {
   const { handleFooterButton } = useStateContext();

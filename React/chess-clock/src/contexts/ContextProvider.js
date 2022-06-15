@@ -7,26 +7,27 @@ import React, {
 } from 'react';
 
 const stateContext = createContext();
-let timer;
+let timer; // global name for setTimeout functions
 
 export const ContextProvider = ({ children }) => {
   const firstUpdate = useRef(true);
 
   const [tick, setTick] = useState(1);
-  const [footerActive, setFooterActive] = useState(true);
+  const [footerSettingsActive, setFooterSettingsActive] = useState(true);
+  const [footerHelpActive, setFooterHelpActive] = useState(false);
   const [turn, setTurn] = useState(true); // true=white turn false=black turn
   const [paused, setPaused] = useState(false);
   const [whiteTimer, setWhiteTimer] = useState(new Date(0, 0, 0, 0, 10, 0));
   const [blackTimer, setBlackTimer] = useState(new Date(0, 0, 0, 0, 10, 0));
   const [gameType, setGameType] = useState({
-    minutes: '10',
-    seconds: '0',
-    increment: '5',
+    minutes: 10,
+    seconds: 0,
+    increment: 5,
   });
   const [tempGameType, setTempGameType] = useState({
-    minutes: '10',
-    seconds: '0',
-    increment: '5',
+    minutes: 10,
+    seconds: 0,
+    increment: 5,
   });
   const [settingsChanged, setSettingsChanged] = useState({
     minutes: '',
@@ -35,19 +36,25 @@ export const ContextProvider = ({ children }) => {
   });
 
   const handleClockButton = (e, text) => {
-    if (text === 'settings') setFooterActive(!footerActive);
-    else if (text === 'play') {
+    console.log(e);
+    if (text === 'settings') {
+      setFooterHelpActive(false);
+      setFooterSettingsActive(!footerSettingsActive);
+    } else if (text === 'play') {
       setPaused(!paused);
       if (tick === 1) setTick(2);
       else {
         clearTimeout(timer);
         setTick(1);
       }
-    } else {
+    } else if (text === 'reset') {
       const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
       setWhiteTimer(newDate);
       setBlackTimer(newDate);
       resetGame();
+    } else if (text === 'help') {
+      setFooterSettingsActive(false);
+      setFooterHelpActive(!footerHelpActive);
     }
   };
 
@@ -120,7 +127,7 @@ export const ContextProvider = ({ children }) => {
   const handleFooterButton = (e, text) => {
     setGameType({ ...gameType, [text]: tempGameType[text] });
     setSettingsChanged({ ...settingsChanged, [text]: '' });
-    if (text === 'minutes' && gameType.minutes != tempGameType.minutes) {
+    if (text === 'minutes' && gameType.minutes !== tempGameType.minutes) {
       setWhiteTimer(
         new Date(0, 0, 0, 0, tempGameType.minutes, gameType.seconds)
       );
@@ -128,7 +135,10 @@ export const ContextProvider = ({ children }) => {
         new Date(0, 0, 0, 0, tempGameType.minutes, gameType.seconds)
       );
       resetGame();
-    } else if (text === 'seconds' && gameType.seconds != tempGameType.seconds) {
+    } else if (
+      text === 'seconds' &&
+      gameType.seconds !== tempGameType.seconds
+    ) {
       setWhiteTimer(
         new Date(0, 0, 0, 0, gameType.minutes, tempGameType.seconds)
       );
@@ -138,7 +148,7 @@ export const ContextProvider = ({ children }) => {
       resetGame();
     } else if (
       text === 'increment' &&
-      gameType.increment != tempGameType.increment
+      gameType.increment !== tempGameType.increment
     ) {
       const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
       setWhiteTimer(newDate);
@@ -174,8 +184,8 @@ export const ContextProvider = ({ children }) => {
   return (
     <stateContext.Provider
       value={{
-        footerActive,
-        setFooterActive,
+        footerSettingsActive,
+        setFooterSettingsActive,
         handleClockButton,
         handleKeyDown,
         turn,
@@ -193,6 +203,8 @@ export const ContextProvider = ({ children }) => {
         setWhiteTimer,
         blackTimer,
         setBlackTimer,
+        footerHelpActive,
+        setFooterHelpActive,
       }}
     >
       {children}

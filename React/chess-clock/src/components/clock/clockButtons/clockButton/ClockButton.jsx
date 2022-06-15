@@ -3,7 +3,7 @@ import './clockButton.css';
 import { useStateContext } from '../../../../contexts/ContextProvider';
 
 const ClockButton = ({ props }) => {
-  const { handleClockButton, footerActive } = useStateContext();
+  const { handleClockButton } = useStateContext();
 
   return (
     <div
