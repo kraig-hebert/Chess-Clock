@@ -9,3 +9,40 @@
         border: 1px green solid;
 }
 
+.footer-help-topic {
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.274);
+    cursor: pointer;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+
+}
+
+.footer-help-topic:hover { 
+    background-color: rgba(255, 255, 255, 0.521);
+}
+
+.footer-help-topic:active { 
+    background-color: rgba(255, 255, 255, 0.705);
+    color: green;
+}
+
+.footer-help-topic > span { 
+    margin-left: 15px;
+}
+
+#play {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#reload {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+

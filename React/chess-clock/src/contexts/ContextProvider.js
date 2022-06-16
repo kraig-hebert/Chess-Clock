@@ -35,6 +35,13 @@ export const ContextProvider = ({ children }) => {
     increment: '',
   });
 
+  // tracks which footer help button is clicked
+  const [buttonActive, setButtonActive] = useState({
+    play: true,
+    settings: false,
+    reload: false,
+  });
+
   const handleClockButton = (e, text) => {
     console.log(e);
     if (text === 'settings') {
@@ -225,6 +232,8 @@ export const ContextProvider = ({ children }) => {
         setBlackTimer,
         footerHelpActive,
         setFooterHelpActive,
+        buttonActive,
+        setButtonActive,
       }}
     >
       {children}
