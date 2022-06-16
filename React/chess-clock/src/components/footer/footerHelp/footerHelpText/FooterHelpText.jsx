@@ -8,7 +8,10 @@ const FooterHelpText = () => {
     <>
       {buttonActive.play ? (
         <ul>
-          <li>Press the play button to begin the game.</li>
+          <li>
+            Press the play button to begin the game, and transform into the
+            pause button.
+          </li>
           <li>Press the pause button to pause the game timer.</li>
           <li>The space bar will swap turns on the timer.</li>
           <li>
@@ -18,13 +21,16 @@ const FooterHelpText = () => {
         </ul>
       ) : buttonActive.settings ? (
         <ul>
-          <li>Set Minutes: Enter the number of minutes the game will be.</li>
           <li>
-            Set Seconds: Enter the number of seconds the game will start with.
+            <u>Set Minutes:</u> Enter the number of minutes the game will be.
           </li>
           <li>
-            Set Increment: Enter the number of seconds to increment before every
-            turn
+            <u>Set Seconds:</u> Enter the number of extra seconds the game will
+            start with.
+          </li>
+          <li>
+            <u>Set Increment:</u> Enter the number of seconds to increment
+            before every turn
           </li>
         </ul>
       ) : (
