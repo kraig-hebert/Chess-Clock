@@ -17,7 +17,9 @@ const FooterButtonHelp = () => {
   return (
     <>
       <button
-        className="footer-help-topic"
+        className={`footer-help-topic ${
+          buttonActive.play && 'footer-help-active'
+        }`}
         id="play"
         onClick={(e) => handleButtonClick(e, 'play')}
       >
@@ -25,7 +27,9 @@ const FooterButtonHelp = () => {
         <span>Play/Pause</span>
       </button>
       <button
-        className="footer-help-topic"
+        className={`footer-help-topic ${
+          buttonActive.settings && 'footer-help-active'
+        }`}
         id="settings"
         onClick={(e) => handleButtonClick(e, 'settings')}
       >
@@ -33,7 +37,9 @@ const FooterButtonHelp = () => {
         <span>Settings</span>
       </button>
       <button
-        className="footer-help-topic"
+        className={`footer-help-topic ${
+          buttonActive.reload && 'footer-help-active'
+        }`}
         id="reload"
         onClick={(e) => handleButtonClick(e, 'reload')}
       >
