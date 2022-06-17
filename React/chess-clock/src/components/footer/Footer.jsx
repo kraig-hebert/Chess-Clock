@@ -1,6 +1,8 @@
+// import basics
 import React from 'react';
 import './footer.css';
 import { useStateContext } from '../../contexts/ContextProvider';
+// import components
 import FooterSettings from './footerSettings/FooterSettings';
 import FooterHelp from './footerHelp/FooterHelp';
 

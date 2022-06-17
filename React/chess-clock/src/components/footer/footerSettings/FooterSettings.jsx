@@ -2,7 +2,7 @@ import React from 'react';
 import './footerSettings.css';
 import { useStateContext } from '../../../contexts/ContextProvider';
 
-import FooterButton from './footerButton/FooterButton';
+import FooterSettingsButton from './footerSettingsButton/FooterSettingsButton';
 import FooterInput from './footerInput/FooterInput';
 
 const FooterSettings = () => {
@@ -13,42 +13,50 @@ const FooterSettings = () => {
       <div className="input-group">
         <p>Set Minutes</p>
         <div className="input-item">
-          <FooterButton text="minutes" />
+          <FooterSettingsButton name="minutes" />
           <FooterInput
             props={{
-              text: 'minutes',
+              name: 'minutes',
               value: tempGameType.minutes,
               class: settingsChanged.minutes,
             }}
           />
         </div>
+        {/* end input-item */}
       </div>
+      {/* end input-group */}
+
       <div className="input-group">
         <p>Set Seconds</p>
         <div className="input-item">
-          <FooterButton text="seconds" />
+          <FooterSettingsButton name="seconds" />
           <FooterInput
             props={{
-              text: 'seconds',
+              name: 'seconds',
               value: tempGameType.seconds,
               class: settingsChanged.seconds,
             }}
           />
         </div>
+        {/* end input-item */}
       </div>
+      {/* end input-group */}
+
       <div className="input-group">
         <p>Set Increment</p>
         <div className="input-item">
-          <FooterButton text="increment" />
+          <FooterSettingsButton name="increment" />
           <FooterInput
             props={{
-              text: 'increment',
+              name: 'increment',
               value: tempGameType.increment,
               class: settingsChanged.increment,
             }}
           />
         </div>
+        {/* end input-item */}
       </div>
+      {/* end input-group */}
     </div>
   );
 };

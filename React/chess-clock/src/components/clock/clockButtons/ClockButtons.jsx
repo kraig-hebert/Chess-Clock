@@ -1,10 +1,14 @@
+//import basics
 import React from 'react';
 import './clockButtons.css';
+import { useStateContext } from '../../../contexts/ContextProvider';
+//import components
 import ClockButton from './clockButton/ClockButton';
+//import icons
 import { AiOutlinePlayCircle, AiOutlinePauseCircle } from 'react-icons/ai';
 import { BiReset, BiHelpCircle } from 'react-icons/bi';
 import { TbSettings } from 'react-icons/tb';
-import { useStateContext } from '../../../contexts/ContextProvider';
+
 const ClockButtons = () => {
   const { footerSettingsActive, footerHelpActive, paused } = useStateContext();
   return (

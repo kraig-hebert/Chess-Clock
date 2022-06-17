@@ -1,8 +1,10 @@
+// import basics
 import React from 'react';
 import './halfClock.css';
+import { useStateContext } from '../../../contexts/ContextProvider';
+//import components
 import TimerName from './timerName/TimerName';
 import Timer from './timer/Timer';
-import { useStateContext } from '../../../contexts/ContextProvider';
 
 const HalfClock = ({ side }) => {
   const { whiteTimer, blackTimer } = useStateContext();

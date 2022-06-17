@@ -1,3 +1,4 @@
+// import basics
 import React from 'react';
 import './footerHelpText.css';
 import { useStateContext } from '../../../../contexts/ContextProvider';
@@ -12,6 +13,7 @@ const FooterHelpText = () => {
             Press the play button to begin the game, and transform into the
             pause button.
           </li>
+
           <li>Press the pause button to pause the game timer.</li>
           <li>The space bar will swap turns on the timer.</li>
           <li>
@@ -34,9 +36,10 @@ const FooterHelpText = () => {
           </li>
         </ul>
       ) : (
-        <p>Click the reload button to reset the game timer and turn.</p>
+        <ul>
+          <li>Click the reload button to reset the game timer and turn.</li>
+        </ul>
       )}
-      <p></p>
     </>
   );
 };

@@ -1,8 +1,8 @@
 .clockButton {
-    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: white;
     border-radius: 15px;
     color: black;
     font-size: 50px;

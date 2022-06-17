@@ -1,12 +1,12 @@
-.footerButton {
+.footer-settings-button {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 50px;
     border: 2px black solid;
     border-radius: 10px;
     background-color: green;
     font-size: 40px;
-    height: 50px;
-    width: 50px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 
 }

@@ -1,13 +1,15 @@
+//import basics
 import React from 'react';
-import { useStateContext } from '../../../../contexts/ContextProvider';
 import './timer.css';
 
 const Timer = ({ timer }) => {
   return (
     <div className="timer">
-      <p>{`${timer[0].toString().padStart(2, '0')}:${timer[1]
-        .toString()
-        .padStart(2, '0')}`}</p>
+      <p>
+        {`${timer[0].toString().padStart(2, '0')}
+          :
+          ${timer[1].toString().padStart(2, '0')}`}
+      </p>
     </div>
   );
 };

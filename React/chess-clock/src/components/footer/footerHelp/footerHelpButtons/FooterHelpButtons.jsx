@@ -1,19 +1,22 @@
+// import the basics
 import React, { useState } from 'react';
-import './footerButtonHelp.css';
-import { BiChevronsRight, BiChevronRight } from 'react-icons/bi';
+import './footerHelpButtons.css';
 import { useStateContext } from '../../../../contexts/ContextProvider';
+// import icons
+import { BiChevronsRight, BiChevronRight } from 'react-icons/bi';
 
-const FooterButtonHelp = () => {
+const FooterHelpButtons = () => {
   const { buttonActive, setButtonActive } = useStateContext();
-  const buttonsItitialState = {
+
+  const buttonRefreshState = {
     play: false,
     settings: false,
     reload: false,
   };
-
-  const handleButtonClick = (e, btn) => {
-    setButtonActive({ ...buttonsItitialState, [btn]: true });
+  const handleButtonClick = (btnName) => {
+    setButtonActive({ ...buttonRefreshState, [btnName]: true });
   };
+
   return (
     <>
       <button
@@ -21,7 +24,7 @@ const FooterButtonHelp = () => {
           buttonActive.play && 'footer-help-active'
         }`}
         id="play"
-        onClick={(e) => handleButtonClick(e, 'play')}
+        onClick={() => handleButtonClick('play')}
       >
         {buttonActive.play ? <BiChevronsRight /> : <BiChevronRight />}
         <span>Play/Pause</span>
@@ -31,7 +34,7 @@ const FooterButtonHelp = () => {
           buttonActive.settings && 'footer-help-active'
         }`}
         id="settings"
-        onClick={(e) => handleButtonClick(e, 'settings')}
+        onClick={() => handleButtonClick('settings')}
       >
         {buttonActive.settings ? <BiChevronsRight /> : <BiChevronRight />}
         <span>Settings</span>
@@ -41,7 +44,7 @@ const FooterButtonHelp = () => {
           buttonActive.reload && 'footer-help-active'
         }`}
         id="reload"
-        onClick={(e) => handleButtonClick(e, 'reload')}
+        onClick={() => handleButtonClick('reload')}
       >
         {buttonActive.reload ? <BiChevronsRight /> : <BiChevronRight />}
         <span>Reload</span>
@@ -50,4 +53,4 @@ const FooterButtonHelp = () => {
   );
 };
 
-export default FooterButtonHelp;
+export default FooterHelpButtons;

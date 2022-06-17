@@ -1,9 +1,10 @@
+// import basics
 import React from 'react';
 import './footerInput.css';
 import { useStateContext } from '../../../../contexts/ContextProvider';
 
 const FooterInput = ({ props }) => {
-  const { handleInputChange } = useStateContext();
+  const { handleFooterInputChange } = useStateContext();
   return (
     <>
       <input
@@ -11,7 +12,7 @@ const FooterInput = ({ props }) => {
         defaultValue={props.value}
         className={`footerInput ${props.class}`}
         maxLength="2"
-        onChange={(e) => handleInputChange(e, props.text)}
+        onChange={(e) => handleFooterInputChange(e, props.name)}
       />
     </>
   );

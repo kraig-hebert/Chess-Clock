@@ -1,5 +1,7 @@
+// import basics
 import React from 'react';
 import './clock.css';
+// import components
 import HalfClock from './halfClock/HalfClock';
 import ClockButtons from './clockButtons/ClockButtons';
 

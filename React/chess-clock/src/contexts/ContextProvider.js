@@ -10,54 +10,66 @@ const stateContext = createContext();
 let timer; // global name for setTimeout functions
 
 export const ContextProvider = ({ children }) => {
+  /* used to not active use effect on load */
   const firstUpdate = useRef(true);
-
+  // used to trigger useEffect to tick 1 second off of the timer
   const [tick, setTick] = useState(1);
+  // sets footer type to be active and shows active button
   const [footerSettingsActive, setFooterSettingsActive] = useState(true);
   const [footerHelpActive, setFooterHelpActive] = useState(false);
-  const [turn, setTurn] = useState(true); // true=white turn false=black turn
+  // tracks turn status....true=white turn false=black turn
+  const [turn, setTurn] = useState(true);
+  // sets play/pause button icon and color
   const [paused, setPaused] = useState(false);
+  // object that reflects each sides timer
   const [whiteTimer, setWhiteTimer] = useState(new Date(0, 0, 0, 0, 10, 0));
   const [blackTimer, setBlackTimer] = useState(new Date(0, 0, 0, 0, 10, 0));
+
+  /* game settings used for when settings up a new game */
   const [gameType, setGameType] = useState({
     minutes: 10,
     seconds: 0,
     increment: 5,
   });
+
+  /* tracks footerSettings inputs and is used to update gameType */
   const [tempGameType, setTempGameType] = useState({
     minutes: 10,
     seconds: 0,
     increment: 5,
   });
+
+  /* used by footerSettings to check if an input's value does not match gameType */
   const [settingsChanged, setSettingsChanged] = useState({
     minutes: '',
     seconds: '',
     increment: '',
   });
 
-  // tracks which footer help button is clicked
+  // tracks which footer help button is clicked to use in FooterHelpButtons and FooterHelpText
   const [buttonActive, setButtonActive] = useState({
     play: true,
     settings: false,
     reload: false,
   });
 
+  /* applies logic based on which clock button is pressed */
   const handleClockButton = (e, text) => {
-    console.log(e);
     if (text === 'settings') {
       setFooterHelpActive(false);
       setFooterSettingsActive(!footerSettingsActive);
     } else if (text === 'play') {
       setPaused(!paused);
-      if (tick === 1) setTick(2);
+      if (tick === 1) setTick((p) => p + 1);
       else {
         clearTimeout(timer);
         setTick(1);
       }
     } else if (text === 'reset') {
-      const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
-      setWhiteTimer(newDate);
-      setBlackTimer(newDate);
+      const wt = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
+      const bt = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
+      setWhiteTimer(wt);
+      setBlackTimer(bt);
       resetGame();
     } else if (text === 'help') {
       setFooterSettingsActive(false);
@@ -65,43 +77,29 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  const resetGame = () => {
-    clearTimeout(timer);
-    setTurn(true);
-    setTick(1);
-    setPaused(false);
-  };
-
+  /* when space is pressed.....
+     stop current timer and add ameType.incremenet to its value
+     and 
+     change turn
+     and 
+     start timer loop of new turn
+   */
   const handleKeyDown = (event) => {
     if (event.code === 'Space') {
-      if (tick === 1) {
+      if (tick === 1)
         return undefined; // ignore space bar if game is paused or play button has not been pressed to start game
-      } else {
-        clearTimeout(timer);
+      else {
+        clearTimeout(timer); // stop current timer
         if (turn) {
-          const newDate = new Date(
-            0,
-            0,
-            0,
-            0,
-            blackTimer.getMinutes(),
-            blackTimer.getSeconds()
-          );
-          newDate.setSeconds(newDate.getSeconds() + gameType.increment);
-          setBlackTimer(newDate);
+          const bt = blackTimer;
+          bt.setSeconds(bt.getSeconds() + gameType.increment);
+          setBlackTimer(bt);
           setTurn(!turn);
           handleWhiteTurn();
         } else {
-          const newDate = new Date(
-            0,
-            0,
-            0,
-            0,
-            whiteTimer.getMinutes(),
-            whiteTimer.getSeconds()
-          );
-          newDate.setSeconds(newDate.getSeconds() + gameType.increment);
-          setWhiteTimer(newDate);
+          const wt = whiteTimer;
+          wt.setSeconds(wt.getSeconds() + gameType.increment);
+          setWhiteTimer(wt);
           setTurn(!turn);
           handleBlackTurn();
         }
@@ -109,61 +107,57 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
+  /* 1 tick of the whiteTimer */
   const handleWhiteTurn = () => {
-    if (whiteTimer.getMinutes() === 0 && whiteTimer.getSeconds() === 0) {
-      console.log('ova');
-    } else {
-      const newDate = new Date(
-        0,
-        0,
-        0,
-        0,
-        whiteTimer.getMinutes(),
-        whiteTimer.getSeconds()
-      );
-      newDate.setSeconds(newDate.getSeconds() - 1);
-      setWhiteTimer(newDate);
+    if (!whiteTimer.getMinutes() && !whiteTimer.getSeconds()) setTick(1);
+    else {
+      const wt = whiteTimer;
+      wt.setSeconds(wt.getSeconds() - 1);
+      setWhiteTimer(wt);
+      setTick((p) => p + 1); // trigger useEffect to tick the timer
     }
-    setTick((p) => p + 1);
   };
+
+  /* 1 tick of the blackTimer */
   const handleBlackTurn = () => {
-    if (blackTimer.getMinutes() === 0 && blackTimer.getSeconds() === 0) {
-      console.log('ova');
-    } else {
-      const newDate = new Date(
-        0,
-        0,
-        0,
-        0,
-        blackTimer.getMinutes(),
-        blackTimer.getSeconds()
-      );
-      newDate.setSeconds(newDate.getSeconds() - 1);
-      setBlackTimer(newDate);
+    if (!blackTimer.getMinutes() && !blackTimer.getSeconds()) setTick(1);
+    else {
+      const bt = blackTimer;
+      bt.setSeconds(bt.getSeconds() - 1);
+      setBlackTimer(bt);
+      setTick((p) => p + 1); // trigger useEffect to tick the timer
     }
-    setTick((p) => p + 1);
   };
 
-  const handleInputChange = (e, text) => {
-    setTempGameType({ ...tempGameType, [text]: parseFloat(e.target.value) });
-    parseFloat(gameType[text]) === parseFloat(e.target.value)
-      ? setSettingsChanged({ ...settingsChanged, [text]: '' })
-      : setSettingsChanged({ ...settingsChanged, [text]: 'value-changed' });
+  /* update the temporary game settings and check value against game type
+     and
+     set class name of target input to show if settings match */
+  const handleFooterInputChange = (e, name) => {
+    setTempGameType({ ...tempGameType, [name]: parseFloat(e.target.value) });
+    parseFloat(gameType[name]) === parseFloat(e.target.value)
+      ? setSettingsChanged({ ...settingsChanged, [name]: '' })
+      : setSettingsChanged({ ...settingsChanged, [name]: 'value-changed' });
   };
 
-  const handleFooterButton = (e, text) => {
-    setGameType({ ...gameType, [text]: tempGameType[text] });
-    setSettingsChanged({ ...settingsChanged, [text]: '' });
-    if (text === 'minutes' && gameType.minutes !== tempGameType.minutes) {
+  /* update gameType settings of the category selected
+     and
+     update settingsChanged to reset className of input
+     and
+     set timers to the new value
+     and
+     reset game clock and turn */
+  const handleFooterSettingsButton = (name) => {
+    setGameType({ ...gameType, [name]: tempGameType[name] });
+    setSettingsChanged({ ...settingsChanged, [name]: '' });
+    if (name === 'minutes' && gameType.minutes !== tempGameType.minutes) {
       setWhiteTimer(
         new Date(0, 0, 0, 0, tempGameType.minutes, gameType.seconds)
       );
       setBlackTimer(
         new Date(0, 0, 0, 0, tempGameType.minutes, gameType.seconds)
       );
-      resetGame();
     } else if (
-      text === 'seconds' &&
+      name === 'seconds' &&
       gameType.seconds !== tempGameType.seconds
     ) {
       setWhiteTimer(
@@ -172,18 +166,28 @@ export const ContextProvider = ({ children }) => {
       setBlackTimer(
         new Date(0, 0, 0, 0, gameType.minutes, tempGameType.seconds)
       );
-      resetGame();
     } else if (
-      text === 'increment' &&
+      name === 'increment' &&
       gameType.increment !== tempGameType.increment
     ) {
       const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
       setWhiteTimer(newDate);
       setBlackTimer(newDate);
-      resetGame();
     }
+    resetGame();
   };
 
+  /* reset relevant variables to initial values */
+  const resetGame = () => {
+    clearTimeout(timer);
+    setTurn(true);
+    setTick(1);
+    setPaused(false);
+  };
+
+  /* similates interval when tick is updated every second.
+     workaround for issue with states updates not being available inside of a
+     setInterval loop */
   useEffect(() => {
     if (tick === 1 || firstUpdate.current === true) {
       firstUpdate.current = false;
@@ -196,12 +200,14 @@ export const ContextProvider = ({ children }) => {
     }
   }, [tick]);
 
+  /* add event listener if either the clock ticks or the turn is changed */
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [turn, tick]);
 
-  /* this use effect allows me to to track difference in game and tempGame for testing NOT NECESSARY for clock to function*/
+  /* this use effect allows me to to track difference in game and tempGame
+     for testing NOT NECESSARY for clock to function*/
   useEffect(() => {
     console.log(gameType);
     console.log(tempGameType);
@@ -221,11 +227,11 @@ export const ContextProvider = ({ children }) => {
         setGameType,
         paused,
         setPaused,
-        handleInputChange,
+        handleFooterInputChange,
         tempGameType,
         settingsChanged,
         setSettingsChanged,
-        handleFooterButton,
+        handleFooterSettingsButton,
         whiteTimer,
         setWhiteTimer,
         blackTimer,
