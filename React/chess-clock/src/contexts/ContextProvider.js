@@ -147,7 +147,6 @@ export const ContextProvider = ({ children }) => {
       ? setSettingsChanged({ ...settingsChanged, [name]: '' })
       : setSettingsChanged({ ...settingsChanged, [name]: 'value-changed' });
   };
-
   /* update gameType settings of the category selected
      and
      update settingsChanged to reset className of input
