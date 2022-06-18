@@ -10,8 +10,10 @@ const stateContext = createContext();
 let timer; // global name for setTimeout functions
 
 export const ContextProvider = ({ children }) => {
-  /* used to not active use effect on load */
+  // used to not active use effect on load
   const firstUpdate = useRef(true);
+  // used to verify first move of game to add increment to white side
+  const firstMove = useRef(true);
   // used to trigger useEffect to tick 1 second off of the timer
   const [tick, setTick] = useState(1);
   // sets footer type to be active and shows active button
@@ -111,7 +113,14 @@ export const ContextProvider = ({ children }) => {
   const handleWhiteTurn = () => {
     if (!whiteTimer.getMinutes() && !whiteTimer.getSeconds()) setTick(1);
     else {
-      const wt = whiteTimer;
+      if (firstMove.current) {
+        // check if it is the first round and add increment to whiteTimer if firsRound === true. space bar event handles every other round
+        firstMove.current = false;
+        let wt = whiteTimer;
+        wt.setSeconds(wt.getSeconds() + gameType.increment + 1);
+        setWhiteTimer(wt);
+      }
+      let wt = whiteTimer;
       wt.setSeconds(wt.getSeconds() - 1);
       setWhiteTimer(wt);
       setTick((p) => p + 1); // trigger useEffect to tick the timer
@@ -217,29 +226,30 @@ export const ContextProvider = ({ children }) => {
   return (
     <stateContext.Provider
       value={{
+        blackTimer,
+        setBlackTimer,
+        buttonActive,
+        setButtonActive,
         footerSettingsActive,
         setFooterSettingsActive,
-        handleClockButton,
-        handleKeyDown,
-        turn,
-        setTurn,
         gameType,
         setGameType,
         paused,
         setPaused,
-        handleFooterInputChange,
-        tempGameType,
         settingsChanged,
         setSettingsChanged,
-        handleFooterSettingsButton,
+        tempGameType,
+        setTempGameType,
+        turn,
+        setTurn,
         whiteTimer,
         setWhiteTimer,
-        blackTimer,
-        setBlackTimer,
         footerHelpActive,
         setFooterHelpActive,
-        buttonActive,
-        setButtonActive,
+        handleClockButton,
+        handleFooterInputChange,
+        handleFooterSettingsButton,
+        handleKeyDown,
       }}
     >
       {children}
