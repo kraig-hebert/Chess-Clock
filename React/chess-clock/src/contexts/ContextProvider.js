@@ -191,6 +191,7 @@ export const ContextProvider = ({ children }) => {
     setTurn(true);
     setTick(1);
     setPaused(false);
+    firstMove.current = true;
   };
 
   /* similates interval when tick is updated every second.
