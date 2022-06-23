@@ -178,9 +178,10 @@ export const ContextProvider = ({ children }) => {
       name === 'increment' &&
       gameType.increment !== tempGameType.increment
     ) {
-      const newDate = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
-      setWhiteTimer(newDate);
-      setBlackTimer(newDate);
+      const wt = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
+      const bt = new Date(0, 0, 0, 0, gameType.minutes, gameType.seconds);
+      setWhiteTimer(wt);
+      setBlackTimer(bt);
     }
     resetGame();
   };
